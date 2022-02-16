@@ -11,11 +11,9 @@ ENDCOMMENT
 
 NEURON {
     SUFFIX ca_conc
-    USEION ca READ cai, cao, ica WRITE cai VALENCE 2
+    USEION ca READ cao, ica WRITE cai VALENCE 2
     RANGE cai
     RANGE cao
-    GLOBAL initialConcentration
-    GLOBAL initialExtConcentration
     RANGE restingConc                       : parameter
     RANGE decayConstant                     : parameter
     RANGE shellDepth                        : parameter
@@ -26,11 +24,9 @@ NEURON {
     RANGE eqshellDepth                      : derived variable
     RANGE innerRadius                       : derived variable
     RANGE shellVolume                       : derived variable
-    
 }
 
 UNITS {
-    
     (nA) = (nanoamp)
     (uA) = (microamp)
     (mA) = (milliamp)
@@ -44,15 +40,11 @@ UNITS {
     (um) = (micrometer)
     (umol) = (micromole)
     (S) = (siemens)
-    
 }
 
 PARAMETER {
-    surfaceArea (um2)
-    iCa (nA)
     initialConcentration (mM)
     initialExtConcentration (mM)
-    
     restingConc = 0 (mM)
     decayConstant = 33.333336 (ms)
     shellDepth = 0.1 (um)
@@ -62,72 +54,49 @@ PARAMETER {
 }
 
 ASSIGNED {
-    cai (mM)
-    cao (mM)
-    ica (mA/cm2)
     diam (um)
     area (um2)
-    
     effectiveRadius (um)                   : derived variable
-    
     eqshellDepth (um)                      : derived variable
-    
     innerRadius (um)                       : derived variable
-    
     shellVolume (um3)                      : derived variable
     rate_concentration (mM/ms)
-    
 }
 
 STATE {
     concentration (mM) 
     extConcentration (mM) 
-    
+    surfaceArea (um2)
+    iCanA (nA)
 }
 
 INITIAL {
-    initialConcentration = cai
-    initialExtConcentration = cao
-    rates()
-    rates() ? To ensure correct initialisation.
-    
-    concentration = initialConcentration
-    
-    extConcentration = initialExtConcentration
-    
+    rates(ica)
+    rates(ica) ? To ensure correct initialisation.
+    concentration = cai
+    extConcentration = cao
 }
 
 BREAKPOINT {
-    
     SOLVE states METHOD cnexp
-    
     if (concentration  < 0) {
         concentration = 0 ? standard OnCondition
     }
-    
-    
 }
 
 DERIVATIVE states {
-    rates()
+    rates(ica)
     concentration' = rate_concentration
-    cai = concentration 
-    
+    cai = concentration
 }
 
-PROCEDURE rates() {
-    
+PROCEDURE rates(icaa) {
     surfaceArea = area   : surfaceArea has units (um2), area (built in to NEURON) is in um^2...
-    
-    iCa = -1 * (0.01) * ica * surfaceArea :   iCa has units (nA) ; ica (built in to NEURON) has units (mA/cm2)...
-    
+    iCanA = -1 * (0.01) * icaa * surfaceArea :   iCanA has units (nA) ; ica (built in to NEURON) has units (mA/cm2)...
     effectiveRadius = LENGTH_SCALE  * (surfaceArea/(  AREA_SCALE   * (4 * 3.14159)))^0.5 ? evaluable
     eqshellDepth = shellDepth  - ((  shellDepth   *   shellDepth  ) /   effectiveRadius  ) ? evaluable
     innerRadius = effectiveRadius  -  eqshellDepth ? evaluable
     shellVolume = (4 * (  effectiveRadius   *  effectiveRadius  *   effectiveRadius  ) * 3.14159 / 3) - (4 * (  innerRadius   *  innerRadius  *   innerRadius  ) * 3.14159 / 3) ? evaluable
-    rate_concentration = ((iCa /surfaceArea) / (2 *  Faraday  *   eqshellDepth  )) - ((  concentration   -   restingConc  ) /   decayConstant  ) ? Note units of all quantities used here need to be consistent!
-    
-     
-    
+    rate_concentration = ((iCanA /surfaceArea) / (2 *  Faraday  *   eqshellDepth  )) - ((  concentration   -   restingConc  ) /   decayConstant  ) ? Note units of all quantities used here need to be consistent!
 }
 
