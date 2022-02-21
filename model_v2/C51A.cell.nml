@@ -3,11 +3,10 @@
     <include href="neuroml/kdr.channel.nml"/>
     <include href="neuroml/k.channel.nml"/>
     <include href="neuroml/cal.channel.nml"/>
-    <include href="neuroml/BK.channel.nml"/>
     <include href="neuroml/cah.channel.nml"/>
     <include href="neuroml/kca.channel.nml"/>
     <include href="neuroml/h.channel.nml"/>
-    <include href="neuroml/ca_0.001um.nml"/>
+    <include href="neuroml/ca.nml"/>
     <include href="neuroml/cacc.channel.nml"/>
     <include href="neuroml/na_a.channel.nml"/>
     <include href="neuroml/leak.channel.nml"/>
@@ -1718,7 +1717,6 @@ inode R X Y Z D/2 idpar</notes>
                 <channelDensity id="kdr_soma" ionChannel="kdr" condDensity="30 mS_per_cm2" erev="-75 mV" segmentGroup="soma_group" ion="k"/>
                 <channelDensity id="k_soma" ionChannel="k" condDensity="15 mS_per_cm2" erev="-75 mV" segmentGroup="soma_group" ion="k"/>
                 <channelDensity id="cal_soma" ionChannel="cal" condDensity="30 mS_per_cm2" erev="120 mV" segmentGroup="soma_group" ion="ca"/>
-                <channelDensity id="BK_soma" ionChannel="BK" condDensity="20 mS_per_cm2" erev="-88 mV" segmentGroup="soma_group" ion="k"/>
                 <channelDensity id="cah_dend" ionChannel="cah" condDensity="10 mS_per_cm2" erev="120 mV" segmentGroup="dendrite_group" ion="ca"/>
                 <channelDensity id="kca_dend" ionChannel="kca" condDensity="220 mS_per_cm2" erev="-75 mV" segmentGroup="dendrite_group" ion="k"/>
                 <channelDensity id="h_dend" ionChannel="h" condDensity="15 mS_per_cm2" erev="-43 mV" segmentGroup="dendrite_group" ion="h"/>
