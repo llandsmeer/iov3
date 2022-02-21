@@ -44,7 +44,7 @@
 
     <gateHHtauInf id="l" instances="1">
       <steadyState type="HHSigmoidVariable" rate="1" midpoint="-85.5mV" scale="-8.5mV"/>
-      <timeCourse type="CaL_tau" tau="3ms" midpoint="-40mV" scale="-33mV"/>
+      <timeCourse type="CaL_tau"/>
     </gateHHtauInf>
 
   </ionChannel>
