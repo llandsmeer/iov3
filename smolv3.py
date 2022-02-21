@@ -13,22 +13,22 @@ from arbor import location as loc
 
 ARBOR_BUILD_CATALOGUE = 'arbor-build-catalogue'
 def compile_smol_model():
-    expected_fn = './model_v3-catalogue.so'
+    expected_fn = './jneuromlv2-catalogue.so'
     if os.path.exists(expected_fn):
         needs_recompile = False
-        for src in glob.glob('model_v3/*.mod'):
+        for src in glob.glob('model_v2/jneuroml_modfiles_handedited/*.mod'):
             if os.path.getmtime(src) > os.path.getmtime(expected_fn):
                 print(src, 'is newer than compiled library')
                 needs_recompile = True
         if not needs_recompile:
             return arbor.load_catalogue(expected_fn)
-    res = subprocess.getoutput(f'{ARBOR_BUILD_CATALOGUE} model_v3 model_v3')
+    res = subprocess.getoutput(f'{ARBOR_BUILD_CATALOGUE} jneuromlv2 model_v2/jneuroml_modfiles_handedited')
     path = res.split()[-1]
     print(res)
     assert path[0] == '/' and path.endswith('.so')
     return arbor.load_catalogue(path)
 
-filename = 'cells/C51A_scaled_exp_resample_5.cell.nml'
+filename = 'model_v2/C51A.cell.nml'
 
 nml = arbor.neuroml(filename)
 
@@ -59,16 +59,17 @@ def mech(group, name, value, scal=1):
     gmax = value*scal
     decor.paint(group, arbor.density(name, dict(gmax=gmax)))
 
-mech(SOMA, 'na_s', 0.040, scal=1)
+mech(SOMA, 'na_s', 0.030, scal=1)
 mech(SOMA, 'kdr',  0.030, scal=1)
 mech(SOMA, 'k',    0.015, scal=1)
-mech(SOMA, 'cal',  0.030, scal=1)
+mech(SOMA, 'cal',  0.030, scal=1.5)
 mech(DEND, 'cah',  0.010, scal=1)
-mech(DEND, 'kca',  0.200, scal=1)
-mech(DEND, 'h',    0.025, scal=1)
-mech(DEND, 'cacc', 0.007, scal=1)
-mech(AXON, 'na_a', 0.250, scal=1)
+mech(DEND, 'kca',  0.220, scal=1)
+mech(DEND, 'h',    0.015, scal=1)
+mech(DEND, 'cacc', 0.007, scal=0.0)
+mech(AXON, 'na_a', 0.200, scal=1)
 mech(AXON, 'k',    0.200, scal=1)
+
 # segmentGroup defaulting to all
 decor.paint('"all"', arbor.density('leak', dict(gmax=1.3e-05)))
 decor.set_property(cm=0.01) # Ohm.cm
@@ -87,19 +88,13 @@ m.probe('voltage', where='"dend_end"',  frequency=1)
 m.probe('voltage', where='"axon_end"',  frequency=1)
 
 print('Simulation start.')
-m.run(2*1000, dt=0.005)
+m.run(1000, dt=0.025)
 print('Simulation done.')
-
-'''
-if len(m.spikes)>0:
-    print('{} spikes:'.format(len(m.spikes)))
-    for s in m.spikes:
-        print('  {:7.4f}'.format(s))
-'''
 
 dend_end = [str(x) for x in cell.locations('"dend_end"')]
 for tr in m.traces:
     x = np.array(tr.value)
+    print(x)
     t = np.array(tr.time) / 1000
     label = tr.location
     if str(tr.location) in dend_end:
