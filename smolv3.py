@@ -13,7 +13,7 @@ from arbor import location as loc
 
 ARBOR_BUILD_CATALOGUE = 'arbor-build-catalogue'
 def compile_smol_model():
-    expected_fn = './model_v3.so'
+    expected_fn = './model_v3-catalogue.so'
     if os.path.exists(expected_fn):
         needs_recompile = False
         for src in glob.glob('model_v3/*.mod'):
@@ -51,7 +51,6 @@ labels['dend_end']  = '(restrict (terminal) (region "dendrite_group"))' # end of
 labels['root']      = '(root)' # the start of the soma in this morphology is at the root of the cell.
 
 decor = arbor.decor()
-
 SOMA = '"soma_group"'
 DEND = '"dendrite_group"'
 AXON = '"axon_group"'
@@ -88,7 +87,7 @@ m.probe('voltage', where='"dend_end"',  frequency=1)
 m.probe('voltage', where='"axon_end"',  frequency=1)
 
 print('Simulation start.')
-m.run(2*1000)
+m.run(2*1000, dt=0.005)
 print('Simulation done.')
 
 '''
@@ -102,7 +101,6 @@ dend_end = [str(x) for x in cell.locations('"dend_end"')]
 for tr in m.traces:
     x = np.array(tr.value)
     t = np.array(tr.time) / 1000
-    print(x)
     label = tr.location
     if str(tr.location) in dend_end:
         label = f'{label} dend'
