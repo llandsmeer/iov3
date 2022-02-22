@@ -1,6 +1,6 @@
 NEURON {
   SUFFIX ca_conc
-  USEION ca READ cai, ica, cao
+  USEION ca READ cai, ica, cao VALENCE 2
 }
 
 STATE { concentration extConcentration }

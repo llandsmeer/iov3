@@ -1,6 +1,6 @@
 NEURON {
   SUFFIX h
-  USEION h READ eh WRITE ih
+  NONSPECIFIC_CURRENT ih
   RANGE conductance
 }
 
@@ -27,7 +27,8 @@ DERIVATIVE dstate {
 
 BREAKPOINT {
   SOLVE dstate METHOD cnexp
-  LOCAL g
+  LOCAL g, eh
+  eh = -43
 
   g = conductance * gates_n_q
   ih = g * (v + -1 * eh)

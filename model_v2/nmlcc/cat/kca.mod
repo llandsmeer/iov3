@@ -1,7 +1,7 @@
 NEURON {
   SUFFIX kca
-  USEION ca READ cai
-  USEION k READ ek WRITE ik
+  USEION ca READ cai VALENCE 2
+  NONSPECIFIC_CURRENT ik
   RANGE conductance
 }
 
@@ -48,8 +48,9 @@ DERIVATIVE dstate {
 
 BREAKPOINT {
   SOLVE dstate METHOD cnexp
-  LOCAL g
+  LOCAL g, ek
 
+  ek = -75
   g = conductance * gates_z_q
   ik = g * (v + -1 * ek)
 }

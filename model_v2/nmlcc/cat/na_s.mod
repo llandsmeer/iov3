@@ -1,6 +1,6 @@
 NEURON {
   SUFFIX na_s
-  USEION na READ ena WRITE ina
+  NONSPECIFIC_CURRENT ina
   RANGE conductance
 }
 
@@ -27,8 +27,9 @@ DERIVATIVE dstate {
 
 BREAKPOINT {
   SOLVE dstate METHOD cnexp
-  LOCAL gates_m_steadyState_x, gates_m_fcond, fopen0, g
+  LOCAL gates_m_steadyState_x, gates_m_fcond, fopen0, g, ena
 
+  ena = 55
   gates_m_steadyState_x = (1 + exp(-0.18181818181818182 * (30 + v)))^-1
   gates_m_fcond = gates_m_steadyState_x * gates_m_steadyState_x * gates_m_steadyState_x
   fopen0 = gates_h_q * gates_m_fcond

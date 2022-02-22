@@ -1,7 +1,7 @@
 NEURON {
   SUFFIX cacc
-  USEION ca READ cai
-  USEION cl READ ecl WRITE icl
+  USEION ca READ cai VALENCE 2
+  NONSPECIFIC_CURRENT icl
   RANGE conductance
 }
 
@@ -10,8 +10,8 @@ PARAMETER {
 }
 
 BREAKPOINT {
-  LOCAL gates_m_steadyState_x, g
-
+  LOCAL gates_m_steadyState_x, g, ecl
+  ecl = -43.0
   gates_m_steadyState_x = (1 + exp(1.1111111405455043 * (3.700000047683716 + -1000000 * cai)))^-1
   g = conductance * gates_m_steadyState_x
   icl = g * (v + -1 * ecl)

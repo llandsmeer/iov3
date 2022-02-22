@@ -62,11 +62,11 @@ def mech(group, name, value, scal=1):
 mech(SOMA, 'na_s', 0.030, scal=1)
 mech(SOMA, 'kdr',  0.030, scal=1)
 mech(SOMA, 'k',    0.015, scal=1)
-mech(SOMA, 'cal',  0.030, scal=1)
+mech(SOMA, 'cal',  0.045, scal=1)
 mech(DEND, 'cah',  0.010, scal=1)
 mech(DEND, 'kca',  0.220, scal=1)
 mech(DEND, 'h',    0.015, scal=1)
-mech(DEND, 'cacc', 0.007, scal=1)
+mech(DEND, 'cacc', 0.000, scal=1)
 mech(AXON, 'na_a', 0.200, scal=1)
 mech(AXON, 'k',    0.200, scal=1)
 
@@ -101,4 +101,5 @@ for tr in m.traces:
         label = f'{label} dend'
     plt.plot(t, x, label=label)
 plt.legend()
+plt.title('jNEUROLML')
 plt.show()

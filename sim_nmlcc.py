@@ -54,31 +54,25 @@ decor = arbor.decor()
 SOMA = '"soma_group"'
 DEND = '"dendrite_group"'
 AXON = '"axon_group"'
+ALL = '"all"'
 
-def mech(group, name, value, scal=1):
-    gmax = value*scal
-    #decor.paint(group, arbor.density(name, dict(gmax=gmax)))
-    decor.paint(group, arbor.density(name))
-
-mech(SOMA, 'na_s', 0.030, scal=1)
-mech(SOMA, 'kdr',  0.030, scal=1)
-mech(SOMA, 'k',    0.015, scal=1)
-mech(SOMA, 'cal',  0.030, scal=1.5)
-mech(DEND, 'cah',  0.010, scal=1)
-mech(DEND, 'kca',  0.220, scal=1)
-mech(DEND, 'h',    0.015, scal=1)
-mech(DEND, 'cacc', 0.007, scal=0.0)
-mech(AXON, 'na_a', 0.200, scal=1)
-mech(AXON, 'k',    0.200, scal=1)
-
-# segmentGroup defaulting to all
-decor.paint('"all"', arbor.density('leak', dict(gmax=1.3e-05)))
+decor.paint(SOMA, arbor.density('na_s'))
+decor.paint(SOMA, arbor.density('kdr'))
+decor.paint(SOMA, arbor.density('k'))
+decor.paint(SOMA, arbor.density('cal'))
+decor.paint(DEND, arbor.density('cah'))
+decor.paint(DEND, arbor.density('kca'))
+decor.paint(DEND, arbor.density('h'))
+decor.paint(DEND, arbor.density('cacc'))
+decor.paint(AXON, arbor.density('na_a'))
+decor.paint(AXON, arbor.density('k'))
+decor.paint(ALL, arbor.density('leak'))
 decor.set_property(cm=0.01) # Ohm.cm
 decor.set_property(Vm=-65.0) # mV
 decor.paint(SOMA, rL=100) # Ohm.cm
 decor.paint(DEND, rL=100) # Ohm.cm
 decor.paint(AXON, rL=100) # Ohm.cm
-decor.paint('"all"', arbor.density('ca_conc'))
+decor.paint(ALL, arbor.density('ca_conc'))
 
 cell = arbor.cable_cell(morpho, labels, decor)
 m = arbor.single_cell_model(cell)
@@ -101,5 +95,6 @@ for tr in m.traces:
     if str(tr.location) in dend_end:
         label = f'{label} dend'
     plt.plot(t, x, label=label)
+plt.title('nmlcc')
 plt.legend()
 plt.show()
