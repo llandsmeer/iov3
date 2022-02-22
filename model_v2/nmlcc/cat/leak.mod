@@ -11,7 +11,7 @@ PARAMETER {
 BREAKPOINT {
   LOCAL g
 
-    g = conductance
+  g = conductance
   ileak = g * (v + -1 * eleak)
 }
 
