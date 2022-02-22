@@ -57,7 +57,8 @@ AXON = '"axon_group"'
 
 def mech(group, name, value, scal=1):
     gmax = value*scal
-    decor.paint(group, arbor.density(name, dict(gmax=gmax)))
+    #decor.paint(group, arbor.density(name, dict(gmax=gmax)))
+    decor.paint(group, arbor.density(name))
 
 mech(SOMA, 'na_s', 0.030, scal=1)
 mech(SOMA, 'kdr',  0.030, scal=1)

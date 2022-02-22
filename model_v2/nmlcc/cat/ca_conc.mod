@@ -10,9 +10,16 @@ INITIAL {
   extConcentration = cao
 }
 
-DERIVATIVE dstate {
-  LOCAL effectiveRadius, eqshellDepth, innerRadius, shellVolume
+CONSTANT {
+   pi = 3.14159
+}
+PARAMETER {
+    diam (um)
+}
 
+DERIVATIVE dstate {
+  LOCAL effectiveRadius, eqshellDepth, innerRadius, shellVolume, area
+  area = pi*diam*diam/4
   effectiveRadius = 1000000 * exp(0.00000000000007957753576289935 * area)
   eqshellDepth = 0.0010000000474974513 + -0.0000010000000949949049 * effectiveRadius^-1
   innerRadius = effectiveRadius + -1 * eqshellDepth

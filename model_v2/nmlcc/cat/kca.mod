@@ -1,6 +1,7 @@
 NEURON {
   SUFFIX kca
   USEION k READ ek WRITE ik
+  USEION ca READ cai
   RANGE conductance
 }
 
