@@ -54,6 +54,6 @@ BREAKPOINT {
   eca = 120
   gates_r_fcond = gates_r_q * gates_r_q
   g = conductance * gates_r_fcond
-  ica = g * (v + -1 * eca)
+  ica = 1000 * g * (v + -1 * eca)
 }
 

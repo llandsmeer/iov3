@@ -34,6 +34,6 @@ BREAKPOINT {
   gates_m_fcond = gates_m_steadyState_x * gates_m_steadyState_x * gates_m_steadyState_x
   fopen0 = gates_h_q * gates_m_fcond
   g = conductance * fopen0
-  ina = g * (v + -1 * ena)
+  ina = 1000 * g * (v + -1 * ena)
 }
 

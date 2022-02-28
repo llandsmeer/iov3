@@ -52,6 +52,6 @@ BREAKPOINT {
 
   ek = -75
   g = conductance * gates_z_q
-  ik = g * (v + -1 * ek)
+  ik = 1000 * g * (v + -1 * ek)
 }
 

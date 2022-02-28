@@ -32,6 +32,6 @@ BREAKPOINT {
   ek = -75
   gates_n_fcond = gates_n_q * gates_n_q * gates_n_q * gates_n_q
   g = conductance * gates_n_fcond
-  ik = g * (v + -1 * ek)
+  ik = 1000 * g * (v + -1 * ek)
 }
 

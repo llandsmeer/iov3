@@ -31,6 +31,6 @@ BREAKPOINT {
   eh = -43
 
   g = conductance * gates_n_q
-  ih = g * (v + -1 * eh)
+  ih = 1000 * g * (v + -1 * eh)
 }
 

@@ -14,6 +14,6 @@ BREAKPOINT {
   ecl = -43.0
   gates_m_steadyState_x = (1 + exp(1.1111111405455043 * (3.700000047683716 + -1000000 * cai)))^-1
   g = conductance * gates_m_steadyState_x
-  icl = g * (v + -1 * ecl)
+  icl = 1000 * g * (v + -1 * ecl) * 0
 }
 

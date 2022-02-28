@@ -19,7 +19,6 @@
     <Include file="neuroml/cah.channel.nml"/>
     <Include file="neuroml/kca.channel.nml"/>
     <Include file="neuroml/h.channel.nml"/>
-    <Include file="neuroml/ca_0.001um.nml"/>
     <Include file="neuroml/cacc.channel.nml"/>
     <Include file="neuroml/na_a.channel.nml"/>
     <Include file="neuroml/leak.channel.nml"/>
