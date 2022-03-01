@@ -1723,7 +1723,7 @@ inode R X Y Z D/2 idpar</notes>
                 <channelDensity id="cacc_dend" ionChannel="cacc" condDensity="0.0 mS_per_cm2" erev="-45 mV" segmentGroup="dendrite_group" ion="cl"/>
                 <channelDensity id="na_axon" ionChannel="na_a" condDensity="200 mS_per_cm2" erev="55 mV" segmentGroup="axon_group" ion="na"/>
                 <channelDensity id="k_axon" ionChannel="k" condDensity="200 mS_per_cm2" erev="-75 mV" segmentGroup="axon_group" ion="k"/>
-                <channelDensity id="leak_all" ionChannel="leak" condDensity="1.3e-2 mS_per_cm2" erev="10 mV" ion="non_specific"/>
+                <channelDensity id="leak_all" ionChannel="passiveChan" condDensity="1.3e-2 mS_per_cm2" erev="10 mV" ion="leak"/>
                 <spikeThresh value="0 mV"/>
                 <specificCapacitance value="1 uF_per_cm2"/>
                 <initMembPotential value="-65.0 mV"/>

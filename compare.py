@@ -1,5 +1,4 @@
 import sys
-sys.path.append('/home/llandsmeer/Repos/llandsmeer/iov3comparison/')
 
 import numpy as np
 import matplotlib.pyplot as plt

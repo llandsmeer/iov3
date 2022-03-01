@@ -59,34 +59,42 @@ def simulate(
     AXON = '"axon_group"'
     ALL = '"all"'
 
+    def mech(group, name, value, scal=1):
+        gmax = value*scal
+        decor.paint(group, arbor.density(name, dict(conductance=gmax)))
+
     if 'na_s' in channels:
-        decor.paint(SOMA, arbor.density('na_s'))
+        mech(SOMA, 'na_s', 0.030, scal=1)
     if 'kdr' in channels:
-        decor.paint(SOMA, arbor.density('kdr'))
+        mech(SOMA, 'kdr',  0.030, scal=1)
     if 'k_s' in channels:
-        decor.paint(SOMA, arbor.density('k'))
+        mech(SOMA, 'k',    0.015, scal=1)
     if 'cal' in channels:
-        decor.paint(SOMA, arbor.density('cal'))
+        mech(SOMA, 'cal',  0.045, scal=1)
     if 'cah' in channels:
-        decor.paint(DEND, arbor.density('cah'))
+        mech(DEND, 'cah',  0.010, scal=1)
     if 'kca' in channels:
-        decor.paint(DEND, arbor.density('kca'))
+        mech(DEND, 'kca',  0.220, scal=1)
     if 'h' in channels:
-        decor.paint(DEND, arbor.density('h'))
+        mech(DEND, 'h',    0.015, scal=1)
     if 'cacc' in channels:
-        decor.paint(DEND, arbor.density('cacc'))
+        mech(DEND, 'cacc', 0.000, scal=1)
     if 'na_a' in channels:
-        decor.paint(AXON, arbor.density('na_a'))
+        mech(AXON, 'na_a', 0.200, scal=1)
     if 'k_a' in channels:
-        decor.paint(AXON, arbor.density('k'))
+        mech(AXON, 'k',    0.200, scal=1)
     if 'leak' in channels:
-        decor.paint(ALL, arbor.density('leak'))
+        decor.paint('"all"', arbor.density('leak', dict(conductance=1.3e-05)))
 
     decor.set_property(cm=0.01) # Ohm.cm
     decor.set_property(Vm=-65.0) # mV
-    decor.paint(SOMA, rL=100) # Ohm.cm
-    decor.paint(DEND, rL=100) # Ohm.cm
-    decor.paint(AXON, rL=100) # Ohm.cm
+    decor.paint(ALL, rL=100) # Ohm.cm
+
+    decor.paint(ALL, ion_name='ca', rev_pot=120)
+    decor.paint(ALL, ion_name='na', rev_pot=55)
+    decor.paint(ALL, ion_name='k', rev_pot=-75)
+
+
     decor.paint(ALL, arbor.density('ca_conc'))
 
     cell = arbor.cable_cell(morpho, labels, decor)
