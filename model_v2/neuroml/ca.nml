@@ -33,7 +33,7 @@
             <!--<DerivedVariable name="debug" dimension="none" value="shell_volume"/>-->
 
 
-            <DerivedVariable name="effectiveRadius" dimension="length" value="LENGTH_SCALE * sqrt(surfaceArea/(AREA_SCALE * (4 * 3.14159)))"/>  <!-- needed to calc volume of pools, etc. -->
+            <DerivedVariable name="effectiveRadius" dimension="length" value="diam * 0.5"/>  <!-- needed to calc volume of pools, etc. -->
             <DerivedVariable name="eqshellDepth" dimension="length" value="shellDepth - ((shellDepth * shellDepth) / effectiveRadius)"/>
             <DerivedVariable name="innerRadius" dimension="length" value="effectiveRadius - eqshellDepth"/>
 

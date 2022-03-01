@@ -59,32 +59,31 @@ def simulate(
     AXON = '"axon_group"'
     ALL = '"all"'
 
-    def mech(group, name, value, scal=1):
-        gmax = value*scal
-        decor.paint(group, arbor.density(name, dict(conductance=gmax)))
+    def mech(group, name, **kwargs):
+        decor.paint(group, arbor.density(name, dict(**kwargs)))
 
     if 'na_s' in channels:
-        mech(SOMA, 'na_s', 0.030, scal=1)
+        mech(SOMA, 'na_s', conductance=0.030)
     if 'kdr' in channels:
-        mech(SOMA, 'kdr',  0.030, scal=1)
+        mech(SOMA, 'kdr',  conductance=0.030)
     if 'k_s' in channels:
-        mech(SOMA, 'k',    0.015, scal=1)
+        mech(SOMA, 'k',    conductance=0.015)
     if 'cal' in channels:
-        mech(SOMA, 'cal',  0.045, scal=1)
+        mech(SOMA, 'cal',  conductance=0.045)
     if 'cah' in channels:
-        mech(DEND, 'cah',  0.010, scal=1)
+        mech(DEND, 'cah',  conductance=0.010)
     if 'kca' in channels:
-        mech(DEND, 'kca',  0.220, scal=1)
+        mech(DEND, 'kca',  conductance=0.220)
     if 'h' in channels:
-        mech(DEND, 'h',    0.015, scal=1)
+        mech(DEND, 'h',    conductance=0.015, eh=-43)
     if 'cacc' in channels:
-        mech(DEND, 'cacc', 0.000, scal=1)
+        mech(DEND, 'cacc', conductance=0.000)
     if 'na_a' in channels:
-        mech(AXON, 'na_a', 0.200, scal=1)
+        mech(AXON, 'na_a', conductance=0.200)
     if 'k_a' in channels:
-        mech(AXON, 'k',    0.200, scal=1)
+        mech(AXON, 'k',    conductance=0.200)
     if 'leak' in channels:
-        decor.paint('"all"', arbor.density('leak', dict(conductance=1.3e-05)))
+        mech(ALL, 'leak', conductance=1.3e-05, eleak=10)
 
     decor.set_property(cm=0.01) # Ohm.cm
     decor.set_property(Vm=-65.0) # mV
@@ -93,7 +92,6 @@ def simulate(
     decor.paint(ALL, ion_name='ca', rev_pot=120)
     decor.paint(ALL, ion_name='na', rev_pot=55)
     decor.paint(ALL, ion_name='k', rev_pot=-75)
-
 
     decor.paint(ALL, arbor.density('ca_conc'))
 
