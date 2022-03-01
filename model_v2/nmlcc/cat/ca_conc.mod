@@ -1,7 +1,9 @@
 NEURON {
   SUFFIX ca_conc
-  USEION ca READ cai, ica, cao VALENCE 2
+  USEION ca READ cai , cao , ica
 }
+
+PARAMETER { diam }
 
 STATE { concentration extConcentration }
 
@@ -10,18 +12,10 @@ INITIAL {
   extConcentration = cao
 }
 
-CONSTANT {
-   pi = 3.14159
-}
-PARAMETER {
-    diam (um)
-}
-
 DERIVATIVE dstate {
-  LOCAL effectiveRadius, eqshellDepth, innerRadius, shellVolume, area
-  area = pi*diam*diam/4
+  LOCAL diam, effectiveRadius, eqshellDepth, innerRadius, shellVolume
 
-  effectiveRadius = 1000000 * (0.00000000000007957753576289935 * area)^0.5
+  effectiveRadius = 0.5 * diam
   eqshellDepth = 0.0010000000474974513 + -0.0000010000000949949049 * effectiveRadius^-1
   innerRadius = effectiveRadius + -1 * eqshellDepth
   shellVolume = -4.1887868245442705 * innerRadius * innerRadius * innerRadius + 4.1887868245442705 * effectiveRadius * effectiveRadius * effectiveRadius

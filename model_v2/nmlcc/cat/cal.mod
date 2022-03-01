@@ -31,8 +31,11 @@ DERIVATIVE dstate {
 
 BREAKPOINT {
   SOLVE dstate METHOD cnexp
-  LOCAL gca
+  LOCAL gates_k_fcond, fopen0, g
 
-  gca = conductance
-  ica = 1000 * gca * (v + -1 * eca)
+  gates_k_fcond = gates_k_q * gates_k_q * gates_k_q
+  fopen0 = gates_k_fcond * gates_l_q
+  g = conductance * fopen0
+  ica = g * (v + -1 * eca)
 }
+
