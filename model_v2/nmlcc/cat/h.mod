@@ -1,11 +1,12 @@
 NEURON {
   SUFFIX h
   NONSPECIFIC_CURRENT ih
-  RANGE conductance
+  RANGE conductance, eh
 }
 
 PARAMETER {
   conductance = 0.00001 (uS)
+  eh = 0 (mV)
 }
 
 STATE { gates_n_q }
@@ -27,10 +28,9 @@ DERIVATIVE dstate {
 
 BREAKPOINT {
   SOLVE dstate METHOD cnexp
-  LOCAL g, eh
-  eh = -43
+  LOCAL g
 
   g = conductance * gates_n_q
-  ih = 1000 * g * (v + -1 * eh)
+  ih = g * (v + -1 * eh)
 }
 

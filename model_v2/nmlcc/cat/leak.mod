@@ -1,17 +1,17 @@
 NEURON {
   SUFFIX leak
   NONSPECIFIC_CURRENT ileak
-  RANGE conductance
+  RANGE conductance, eleak
 }
 
 PARAMETER {
   conductance = 0.00001 (uS)
+  eleak = 0 (mV)
 }
 
 BREAKPOINT {
-  LOCAL g, eleak
+  LOCAL g
 
-  eleak = 10
   g = conductance
   ileak = g * (v + -1 * eleak)
 }

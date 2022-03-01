@@ -1,6 +1,6 @@
 NEURON {
   SUFFIX kdr
-  NONSPECIFIC_CURRENT ik
+  USEION k WRITE ik READ ek
   RANGE conductance
 }
 
@@ -27,11 +27,10 @@ DERIVATIVE dstate {
 
 BREAKPOINT {
   SOLVE dstate METHOD cnexp
-  LOCAL gates_n_fcond, g, ek
+  LOCAL gates_n_fcond, g
 
-  ek = -75
   gates_n_fcond = gates_n_q * gates_n_q * gates_n_q * gates_n_q
   g = conductance * gates_n_fcond
-  ik = 1000 * g * (v + -1 * ek)
+  ik = g * (v + -1 * ek)
 }
 

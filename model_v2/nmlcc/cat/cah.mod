@@ -1,6 +1,6 @@
 NEURON {
   SUFFIX cah
-  USEION ca WRITE ica, cao VALENCE 2 ? Assuming valence = 2 (Ca ion); TODO check this!!
+  USEION ca WRITE ica READ eca
   RANGE conductance
 }
 
@@ -43,17 +43,16 @@ DERIVATIVE dstate {
     }
   }
   gates_r_inf = gates_r_forwardRate_r * (gates_r_forwardRate_r + gates_r_reverseRate_r)^-1
-  gates_r_tau = (gates_r_forwardRate_r + gates_r_reverseRate_r)^-1
+  gates_r_tau = (0.20000000298023224 * (gates_r_forwardRate_r + gates_r_reverseRate_r))^-1
   gates_r_q' = (gates_r_inf + -1 * gates_r_q) * gates_r_tau^-1
 }
 
 BREAKPOINT {
   SOLVE dstate METHOD cnexp
-  LOCAL gates_r_fcond, g, eca
+  LOCAL gates_r_fcond, g
 
-  eca = 120
   gates_r_fcond = gates_r_q * gates_r_q
   g = conductance * gates_r_fcond
-  ica = 1000 * g * (v + -1 * eca)
+  ica = g * (v + -1 * eca)
 }
 
