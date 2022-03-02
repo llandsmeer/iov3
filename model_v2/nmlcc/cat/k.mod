@@ -1,6 +1,7 @@
 NEURON {
   SUFFIX k
-  USEION k WRITE ik READ ek
+  : USEION k WRITE ik READ ek ??? This really should be an ION
+  NONSPECIFIC_CURRENT ik
   RANGE conductance
 }
 
@@ -49,7 +50,9 @@ DERIVATIVE dstate {
 
 BREAKPOINT {
   SOLVE dstate METHOD cnexp
-  LOCAL gates_n_fcond, g
+  LOCAL gates_n_fcond, g, ek
+
+  ek = -75.0
 
   gates_n_fcond = gates_n_q * gates_n_q * gates_n_q * gates_n_q
   g = conductance * gates_n_fcond

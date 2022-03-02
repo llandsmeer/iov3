@@ -1,30 +1,36 @@
 NEURON {
   SUFFIX ca_conc
-  USEION ca READ cai , cao , ica
+  USEION ca READ ica WRITE cai
+  RANGE initialConcentration
 }
 
-PARAMETER { diam }
+PARAMETER {
+  diam
+  initialConcentration = 0 (mM)
+}
 
-STATE { concentration extConcentration }
+STATE { cai }
 
 INITIAL {
-  concentration = cai
-  extConcentration = cao
+  cai = initialConcentration
 }
 
 DERIVATIVE dstate {
-  LOCAL diam, effectiveRadius, eqshellDepth, innerRadius, shellVolume
+  LOCAL surfaceArea, effectiveRadius, eqshellDepth, innerRadius, shellVolume
 
-  effectiveRadius = 0.5 * diam
+  surfaceArea = 0.7853975296020508 * diam * diam
+  effectiveRadius = 0.25 * diam
   eqshellDepth = 0.0010000000474974513 + -0.0000010000000949949049 * effectiveRadius^-1
   innerRadius = effectiveRadius + -1 * eqshellDepth
   shellVolume = -4.1887868245442705 * innerRadius * innerRadius * innerRadius + 4.1887868245442705 * effectiveRadius * effectiveRadius * effectiveRadius
-  concentration' = -0.030000001144409223 * concentration + ica * (0.19297059375 * shellVolume)^-1
+  cai' = -0.030000001144409223 * cai + -0.009999999776482582 * ica * surfaceArea * (0.19297059375 * shellVolume)^-1
 }
 
 BREAKPOINT {
   SOLVE dstate METHOD cnexp
-  cai = concentration
-  cao = extConcentration
+  if (cai < 0) {
+    cai = 0
+  }
+
 }
 

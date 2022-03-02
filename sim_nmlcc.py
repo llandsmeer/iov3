@@ -66,8 +66,6 @@ def simulate(
         mech(SOMA, 'na_s', conductance=0.030)
     if 'kdr' in channels:
         mech(SOMA, 'kdr',  conductance=0.030)
-    if 'k_s' in channels:
-        mech(SOMA, 'k',    conductance=0.015)
     if 'cal' in channels:
         mech(SOMA, 'cal',  conductance=0.045)
     if 'cah' in channels:
@@ -82,6 +80,8 @@ def simulate(
         mech(AXON, 'na_a', conductance=0.200)
     if 'k_a' in channels:
         mech(AXON, 'k',    conductance=0.200)
+    if 'k_s' in channels:
+        mech(SOMA, 'k',    conductance=0.015)
     if 'leak' in channels:
         mech(ALL, 'leak', conductance=1.3e-05, eleak=10)
 
@@ -93,7 +93,7 @@ def simulate(
     decor.paint(ALL, ion_name='na', rev_pot=55)
     decor.paint(ALL, ion_name='k', rev_pot=-75)
 
-    decor.paint(ALL, arbor.density('ca_conc'))
+    mech(ALL, 'ca_conc', initialConcentration=3.7152)
 
     cell = arbor.cable_cell(morpho, labels, decor)
     m = arbor.single_cell_model(cell)

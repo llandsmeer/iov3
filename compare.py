@@ -6,8 +6,7 @@ import matplotlib.pyplot as plt
 from sim_jneuroml import simulate as jnml
 from sim_nmlcc import simulate as nmlcc
 
-ok = ('na_s', 'kdr', 'k_s', 'na_a')
-ok = []
+ok = ['leak', ]
 allchannels = (
         'na_s', 'kdr', 'k_s', 'cal',
         'cah', 'kca', 'h', 'cacc',
