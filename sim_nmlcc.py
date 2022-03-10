@@ -65,13 +65,13 @@ def simulate(
     if 'na_s' in channels:
         mech(SOMA, 'na_s', conductance=0.030)
     if 'kdr' in channels:
-        mech(SOMA, 'kdr',  conductance=0.030)
+        mech(SOMA, 'kdr',  conductance=0.030, ek=-75)
     if 'cal' in channels:
         mech(SOMA, 'cal',  conductance=0.045)
     if 'cah' in channels:
         mech(DEND, 'cah',  conductance=0.010)
     if 'kca' in channels:
-        mech(DEND, 'kca',  conductance=0.220)
+        mech(DEND, 'kca',  conductance=0.220, ek=-75)
     if 'h' in channels:
         mech(DEND, 'h',    conductance=0.015, eh=-43)
     if 'cacc' in channels:
@@ -79,9 +79,9 @@ def simulate(
     if 'na_a' in channels:
         mech(AXON, 'na_a', conductance=0.200)
     if 'k_a' in channels:
-        mech(AXON, 'k',    conductance=0.200)
+        mech(AXON, 'k',    conductance=0.200, ek=-75)
     if 'k_s' in channels:
-        mech(SOMA, 'k',    conductance=0.015)
+        mech(SOMA, 'k',    conductance=0.015, ek=-75)
     if 'leak' in channels:
         mech(ALL, 'leak', conductance=1.3e-05, eleak=10)
 
