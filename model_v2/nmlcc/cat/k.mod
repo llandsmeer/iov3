@@ -1,11 +1,12 @@
 NEURON {
   SUFFIX k
-  USEION k WRITE ik READ ek
-  RANGE conductance
+  NONSPECIFIC_CURRENT ik
+  RANGE conductance, ek
 }
 
 PARAMETER {
   conductance = 0.00001 (uS)
+  ek = 0 (mV)
 }
 
 STATE { gates_n_q }

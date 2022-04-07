@@ -1,12 +1,13 @@
 NEURON {
   SUFFIX kca
   USEION ca READ cai
-  USEION k WRITE ik READ ek
-  RANGE conductance
+  NONSPECIFIC_CURRENT ik
+  RANGE conductance, ek
 }
 
 PARAMETER {
   conductance = 0.00001 (uS)
+  ek = 0 (mV)
 }
 
 STATE { gates_z_q }
@@ -14,7 +15,7 @@ STATE { gates_z_q }
 INITIAL {
   LOCAL gates_z_forwardRate_ca_norm, gates_z_forwardRate_r, gates_z_inf
 
-  gates_z_forwardRate_ca_norm = 19.999999494757503 * cai
+  gates_z_forwardRate_ca_norm = 0.00002 * cai
   if (gates_z_forwardRate_ca_norm > 0.009999999776482582) {
     gates_z_forwardRate_r = 0.009999999776482582
   } else {
@@ -31,7 +32,7 @@ INITIAL {
 DERIVATIVE dstate {
   LOCAL gates_z_forwardRate_ca_norm, gates_z_forwardRate_r, gates_z_inf, gates_z_tau
 
-  gates_z_forwardRate_ca_norm = 19.999999494757503 * cai
+  gates_z_forwardRate_ca_norm = 0.00002 * cai
   if (gates_z_forwardRate_ca_norm > 0.009999999776482582) {
     gates_z_forwardRate_r = 0.009999999776482582
   } else {

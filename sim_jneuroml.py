@@ -58,40 +58,43 @@ def simulate(
     SOMA = '"soma_group"'
     DEND = '"dendrite_group"'
     AXON = '"axon_group"'
+    ALL = '"all"'
 
-    def mech(group, name, value, scal=1):
-        gmax = value*scal
-        decor.paint(group, arbor.density(name, dict(gmax=gmax)))
+    def mech(group, name, **kwargs):
+        decor.paint(group, arbor.density(name, dict(**kwargs)))
 
     if 'na_s' in channels:
-        mech(SOMA, 'na_s', 0.030, scal=1)
+        mech(SOMA, 'na_s', gmax=0.030)
     if 'kdr' in channels:
-        mech(SOMA, 'kdr',  0.030, scal=1)
+        mech(SOMA, 'kdr',  gmax=0.030)
     if 'k_s' in channels:
-        mech(SOMA, 'k',    0.015, scal=1)
+        mech(SOMA, 'k',    gmax=0.015)
     if 'cal' in channels:
-        mech(SOMA, 'cal',  0.045, scal=1)
+        mech(SOMA, 'cal',  gmax=0.045)
     if 'cah' in channels:
-        mech(DEND, 'cah',  0.010, scal=1)
+        mech(DEND, 'cah',  gmax=0.010)
     if 'kca' in channels:
-        mech(DEND, 'kca',  0.220, scal=1)
+        mech(DEND, 'kca',  gmax=0.220)
     if 'h' in channels:
-        mech(DEND, 'h',    0.015, scal=1)
+        mech(DEND, 'h',    gmax=0.015)
     if 'cacc' in channels:
-        mech(DEND, 'cacc', 0.000, scal=1)
+        mech(DEND, 'cacc', gmax=0.000)
     if 'na_a' in channels:
-        mech(AXON, 'na_a', 0.200, scal=1)
+        mech(AXON, 'na_a', gmax=0.200)
     if 'k_a' in channels:
-        mech(AXON, 'k',    0.200, scal=1)
+        mech(AXON, 'k',    gmax=0.200)
     if 'leak' in channels:
-        decor.paint('"all"', arbor.density('leak', dict(gmax=1.3e-05)))
+        mech(ALL, 'leak', gmax=1.3e-05)
 
     decor.set_property(cm=0.01) # Ohm.cm
     decor.set_property(Vm=-65.0) # mV
-    decor.paint(SOMA, rL=100) # Ohm.cm
-    decor.paint(DEND, rL=100) # Ohm.cm
-    decor.paint(AXON, rL=100) # Ohm.cm
-    decor.paint('"all"', arbor.density('ca_conc'))
+    decor.paint(ALL, rL=100) # Ohm.cm
+
+    decor.paint(ALL, ion_name='ca', rev_pot=120)
+    decor.paint(ALL, ion_name='na', rev_pot=55)
+    decor.paint(ALL, ion_name='k', rev_pot=-75)
+
+    mech(ALL, 'ca_conc')
 
     cell = arbor.cable_cell(morpho, labels, decor)
     m = arbor.single_cell_model(cell)
